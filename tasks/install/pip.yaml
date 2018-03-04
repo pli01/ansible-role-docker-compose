@@ -1,0 +1,8 @@
+---
+- name: Install docker-compose using pip.
+  pip:
+    extra_args: "{{ docker_compose_pip_extra_args|default(omit) }}"
+    name: "{{ docker_compose_pip_name }}"
+    version: "{{ docker_compose_pip_version|default(omit) }}"
+    virtualenv: "{{ docker_compose_pip_virtualenv|default(omit) }}"
+  environment: "{{ proxy_env | default(omit) }}"

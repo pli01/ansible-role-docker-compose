@@ -1,0 +1,15 @@
+---
+- name: Define docker_compose_build_depends.
+  set_fact:
+    docker_compose_build_depends: "{{ __docker_compose_build_depends | list }}"
+  when: docker_compose_build_depends is not defined
+
+- name: Ensure build dependencies are installed.
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items: "{{ docker_compose_build_depends }}"
+  when: docker_compose_install_method == 'curl' or docker_compose_install_method == 'pip'
+
+- include: "install/{{ docker_compose_install_method }}.yaml"
+  when: not ansible_check_mode

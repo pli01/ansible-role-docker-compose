@@ -1,0 +1,5 @@
+---
+- name: Install docker-compose from package.
+  package:
+    name: "{{ docker_compose_package_name }}"
+    state: installed

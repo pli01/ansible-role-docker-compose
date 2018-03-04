@@ -1,0 +1,8 @@
+---
+- name: install docker-compose using curl
+  get_url:
+    url: '{{ docker_compose_curl_url }}'
+    dest: '{{ docker_compose_bin }}'
+    force: true
+    mode: '555'
+  environment: "{{ proxy_env |default(omit) }}"

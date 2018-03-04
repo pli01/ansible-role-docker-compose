@@ -1,0 +1,30 @@
+---
+- hosts: test
+  vars:
+    rolename: "{{ lookup('pipe', 'pwd') | dirname | basename }}"
+  pre_tasks:
+    # Make sure OS does not have a stale package cache.
+    - name: Update apt cache.
+      become: yes
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - "{{ rolename }}"
+
+  post_tasks:
+    - name: Register /etc/docker-compose.
+      stat:
+        path: /etc/docker-compose
+      register: docker-compose_stat
+
+    - name: Assert /etc/docker-compose tests.
+      assert:
+        that:
+          - docker-compose_stat.stat.exists
+          - docker-compose_stat.stat.isdir
+          - docker-compose_stat.stat.pw_name == 'root'
+          - docker-compose_stat.stat.gr_name == 'root'
+          - docker-compose_stat.stat.mode == '0755'
+

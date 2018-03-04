@@ -1,0 +1,17 @@
+---
+# tasks/config.yaml
+
+# tasks/install.yaml
+# docker_compose_install_method: pip package curl
+docker_compose_install_method: pip
+
+docker_compose_pip_name: docker-compose
+# docker_compose_pip_extra_args:
+docker_compose_pip_version: 1.19.0
+# docker_compose_pip_virtualenv:
+
+#docker_compose_package_name:
+
+docker_compose_curl_url: 'https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}'
+docker_compose_bin: /usr/local/bin/docker-compose
+docker_compose_version: 1.19.0
