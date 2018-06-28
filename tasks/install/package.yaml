@@ -3,3 +3,4 @@
   package:
     name: "{{ docker_compose_package_name }}"
     state: installed
+  environment: "{{ proxy_env | default(omit) }}"
